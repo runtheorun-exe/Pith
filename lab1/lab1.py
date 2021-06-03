@@ -1,5 +1,7 @@
+import csv
 import random
 import matplotlib.pyplot as plt
+
 
 # Δημιουργείστε ένα πρόγραμμα το οποίο κάθε φορά που εκτελείται θα επιστρέφει ένα τυχαίο αριθμό
 def rnd():
@@ -8,7 +10,7 @@ def rnd():
 
 # Χρησιμοποιώντας τη συνάρτηση intrand(void) εμφανίστε στην οθόνη 10 τυχαίους αριθμούς.
 def rnd_ten():
-    for i in range(1, 10):
+    for x in range(1, 10):
         print(random.randint(0, 999999))
 
 
@@ -24,7 +26,8 @@ def rnd_ten():
 # ρίψη ζαριού χωρίς seed
 def dice(N):
     nmbr = str(N)
-    a, b, c, d, e, f = 0,0,0,0,0,0
+    csv_file = "dice" + nmbr + "roll.csv"
+    a, b, c, d, e, f = 0, 0, 0, 0, 0, 0
     diceroll = {
         "1": a,
         "2": b,
@@ -33,7 +36,8 @@ def dice(N):
         "5": e,
         "6": f
     }
-    for i in range(0, N):
+    csv_columns = ['1', '2', '3', '4', '5', '6']
+    for y in range(0, N):
         rolled = random.randrange(1, 7)
         if rolled == 1:
             diceroll["1"] += 1
@@ -47,16 +51,19 @@ def dice(N):
             diceroll["5"] += 1
         if rolled == 6:
             diceroll["6"] += 1
-    keys = diceroll.keys()
-    values = diceroll.values()
     plt.bar(*zip(*diceroll.items()))
     plt.show()
+    with open(csv_file, 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=csv_columns, delimiter=',')
+        writer.writeheader()
+        writer.writerow(diceroll)
+
 
 
 # Χρησιμοποιώντας τον κώδικα του ερωτήματος 4, να καταγράψετε σε αρχείο (txt, csv, dat ) τα αποτελέσματα
 # (συχνότητες εμφάνισης) της ρίψης ενός ζαριού για 10, 100, 1000, 10.000, 100.000, 1.000.000 φορές
 n = 10
 for i in range(0, 6):
-    print (n)
+    print(n)
     dice(n)
     n = n * 10
