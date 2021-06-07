@@ -45,7 +45,6 @@ def rangen(n):
             results["[0.3-0.4)"] += 1
         elif result < 0.5:
             results["[0.4-0.5)"] += 1
-        elif result < 0.6:
             results["[0.5-0.6)"] += 1
         elif result < 0.7:
             results["[0.6-0.7)"] += 1
